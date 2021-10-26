@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         searchViewModel = ViewModelProvider(this, viewModelFactory).get(SearchViewModel::class.java)
         try {
-            searchViewModel.getCollections("jack johnson", "213")
+            searchViewModel.getCollections("jack johnson", "movie")
         } catch (e1: Exception) {
             test.text = e1.toString()
         }
