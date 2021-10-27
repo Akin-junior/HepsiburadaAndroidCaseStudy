@@ -3,8 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/CaseStudy/app/src/main/res/drawable/app_store_icon.xml" value="0.4010416666666667" />
+        <entry key="..\:/CaseStudy/app/src/main/res/drawable/categories_bg.xml" value="0.4010416666666667" />
+        <entry key="..\:/CaseStudy/app/src/main/res/drawable/categories_notseleceted_bg.xml" value="0.4010416666666667" />
+        <entry key="..\:/CaseStudy/app/src/main/res/drawable/movie_icon.xml" value="0.4010416666666667" />
+        <entry key="..\:/CaseStudy/app/src/main/res/drawable/musics_icon.xml" value="0.4010416666666667" />
         <entry key="..\:/CaseStudy/app/src/main/res/layout/activity_main.xml" value="0.5322916666666667" />
-        <entry key="..\:/CaseStudy/app/src/main/res/layout/collections_item.xml" value="0.2028985507246377" />
+        <entry key="..\:/CaseStudy/app/src/main/res/layout/categories_item.xml" value="0.396875" />
+        <entry key="..\:/CaseStudy/app/src/main/res/layout/collections_item.xml" value="0.25" />
+        <entry key="..\:/CaseStudy/app/src/main/res/layout/fragment_detail.xml" value="0.4192708333333333" />
+        <entry key="..\:/CaseStudy/app/src/main/res/layout/fragment_search.xml" value="0.25" />
       </map>
     </option>
   </component>

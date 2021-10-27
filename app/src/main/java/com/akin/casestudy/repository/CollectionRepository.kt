@@ -5,7 +5,7 @@ import com.akin.casestudy.data.models.CollectionModels
 import com.akin.casestudy.data.models.mapper.PureCollectionModel
 import retrofit2.Response
 
-class Repository {
+class CollectionRepository {
 
    suspend fun getCustomCollection(artistName: String, entity:String) : Response<CollectionModels> {
         return RetrofitInstance.api.getSpesificName(artistName,entity)

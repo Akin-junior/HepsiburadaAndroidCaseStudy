@@ -9,9 +9,8 @@ interface IRetrofit {
     @GET("search")
     suspend fun getSpesificName(
         @Query("term") artistName: String,
-        @Query("entity") entity: String,
-//        @QueryMap options:Map<String,String>,
-        @Query("limit") limit: Int=5,
+        @Query("media") mediaType: String,
+        @Query("limit") limit: Int=20,
     ): Response<CollectionModels>
 
 }
