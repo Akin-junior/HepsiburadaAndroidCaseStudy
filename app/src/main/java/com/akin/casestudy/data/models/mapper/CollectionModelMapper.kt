@@ -14,7 +14,9 @@ fun Result.toDomain(): PureCollectionModel {
         trackName,
         description,
         shortDescription,
-        previewUrl
+        previewUrl,
+        genres,
+        primaryGenreName
 
     )
 }

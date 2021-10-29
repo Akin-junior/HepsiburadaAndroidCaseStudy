@@ -2,13 +2,11 @@ package com.akin.casestudy.ui.fragment
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
-import android.widget.EditText
 import android.widget.SearchView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -25,6 +23,10 @@ import com.akin.casestudy.ui.adapters.SearchAdapter
 import com.akin.casestudy.ui.fragment.basefragment.BaseFragment
 import com.akin.casestudy.util.Constants.Companion.LIMIT
 import com.akin.casestudy.util.Constants.Companion.OFFSET
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
@@ -78,14 +80,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
             }
             binding.rcCategories.adapter = adapter
 
-
         })
-
     }
 
-
     private fun setDataByApi(term: String) {
-
         searchViewModel.getCollections(term, "", 20, OFFSET)
         searchViewModel.collectionList.observe(viewLifecycleOwner, { response ->
             list.clear()
@@ -121,9 +119,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         })
 
     }
+
     private fun searchViewListener() {
 
         binding.searchEditView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query?.length!! > 2) {
                     staticQuery = query
@@ -166,4 +166,5 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
         checkRecyclerViewToEnd()
     }
+
 }

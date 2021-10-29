@@ -14,33 +14,39 @@ data class PureCollectionModel(
     val description: String?,
     val shortDescription: String?,
     val previewUrl: String?,
+    val genres: List<String>?,
+    val primaryGenreName: String?,
 
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
-        parcel.readDouble(),
-        parcel.readString().toString(),
-        parcel.readString().toString(),
-        parcel.readString().toString(),
-        parcel.readDouble(),
-        parcel.readString().toString(),
-        parcel.readString().toString(),
-        parcel.readString().toString(),
-        parcel.readString().toString(),
+        parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.createStringArrayList(),
+        parcel.readString()
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(collectionName)
-        parcel.writeDouble(collectionPrice!!)
+        parcel.writeValue(collectionPrice)
         parcel.writeString(imageUrl)
         parcel.writeString(releaseDate)
         parcel.writeString(artistName)
-        parcel.writeDouble(price!!)
+        parcel.writeValue(price)
         parcel.writeString(trackName)
         parcel.writeString(description)
         parcel.writeString(shortDescription)
         parcel.writeString(previewUrl)
+        parcel.writeStringList(genres)
+        parcel.writeString(primaryGenreName)
     }
 
     override fun describeContents(): Int {
@@ -57,4 +63,6 @@ data class PureCollectionModel(
         }
     }
 }
+
+
 

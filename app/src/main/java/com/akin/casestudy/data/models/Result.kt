@@ -23,6 +23,7 @@ data class Result(
     val description: String,
     val discCount: Int,
     val discNumber: Int,
+    val genres: List<String>,
     val hasITunesExtras: Boolean,
     val isStreamable: Boolean,
     val kind: String,

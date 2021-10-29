@@ -17,3 +17,9 @@ fun ImageView.loadString(imgUrl: String?) {
         .into(this)
 
 }
+fun ImageView.loadStringForDetailPage(imgUrl: String?) {
+    Glide.with(context)
+        .load(imgUrl)
+        .into(this)
+
+}

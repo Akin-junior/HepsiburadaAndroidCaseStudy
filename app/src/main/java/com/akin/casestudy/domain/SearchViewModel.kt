@@ -11,7 +11,6 @@ class SearchViewModel(private val repository: CollectionRepository) : ViewModel(
     private val _collectionList = MutableLiveData<List<PureCollectionModel>>()
     val collectionList: LiveData<List<PureCollectionModel>> = _collectionList
 
-
     fun getCollections(artistName: String, entity: String, limit: Int, offset: Int)  {
 
         viewModelScope.launch {
@@ -28,7 +27,5 @@ class SearchViewModel(private val repository: CollectionRepository) : ViewModel(
         }
 
     }
-
-
 
 }
