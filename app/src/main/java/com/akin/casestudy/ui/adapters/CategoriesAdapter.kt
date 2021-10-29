@@ -2,19 +2,19 @@ package com.akin.casestudy.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import com.akin.casestudy.R
+import com.akin.casestudy.data.models.CategoriesModel
 import com.akin.casestudy.databinding.CategoriesItemBinding
 import com.akin.casestudy.interfaces.ICategoriesOnClick
+import com.akin.casestudy.util.Constants
+import com.akin.casestudy.util.Constants.Companion.LIMIT
+import com.akin.casestudy.util.Constants.Companion.OFFSET
 import com.akin.casestudy.util.loadInt
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 
 class CategoriesAdapter(
-    private val nameList: List<String>,
-    private val imageList: List<Int>,
+    private val categoriesList: List<CategoriesModel>,
     val clickListener: (categories: String) -> Unit = {}
 ) :
     RecyclerView.Adapter<CategoriesAdapter.CategoriesViewHolder>() {
@@ -23,7 +23,6 @@ class CategoriesAdapter(
 
     inner class CategoriesViewHolder(val binding: CategoriesItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
 
     }
 
@@ -34,11 +33,11 @@ class CategoriesAdapter(
     }
 
     override fun onBindViewHolder(holder: CategoriesViewHolder, position: Int) {
-        val nameListed = nameList[position]
-        val imageListed = imageList[position]
+        val categorizedList = categoriesList[position]
+
         holder.binding.apply {
-            categoriesItemTitle.text = nameListed
-            categoriesItemImage.loadInt(imageListed)
+            categoriesItemTitle.text = categorizedList.shownName
+            categoriesItemImage.loadInt(categorizedList.image)
         }
         when (position) {
             selectedItem -> {
@@ -58,13 +57,11 @@ class CategoriesAdapter(
             }
         }
         holder.binding.linearLayout.setOnClickListener {
-            when (nameListed) {
-                "Books" -> clickListener("ebook")
-                "Apps" -> clickListener("software")
-                else -> clickListener(nameListed.lowercase())
+            if (selectedItem!=position){
+                clickListener(categorizedList.name)
+                LIMIT = 20
             }
-
-            selectedItem = holder.adapterPosition
+            selectedItem = position
             listener?.let {
                 listener?.onClick(position)
             }
@@ -75,6 +72,6 @@ class CategoriesAdapter(
     }
 
     override fun getItemCount(): Int {
-        return nameList.size
+        return categoriesList.size
     }
 }

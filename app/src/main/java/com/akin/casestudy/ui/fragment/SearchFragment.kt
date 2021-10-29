@@ -1,116 +1,169 @@
 package com.akin.casestudy.ui.fragment
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import android.widget.EditText
 import android.widget.SearchView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.akin.casestudy.R
+import androidx.recyclerview.widget.RecyclerView
+import com.akin.casestudy.data.models.mapper.PureCollectionModel
 import com.akin.casestudy.databinding.FragmentSearchBinding
+import com.akin.casestudy.domain.CategoriesViewModel
 import com.akin.casestudy.domain.SearchViewModel
-import com.akin.casestudy.factory.SearchViewModelFactory
-import com.akin.casestudy.repository.CollectionRepository
+import com.akin.casestudy.domain.factory.SearchViewModelFactory
+import com.akin.casestudy.domain.repository.CollectionRepository
 import com.akin.casestudy.ui.adapters.CategoriesAdapter
 import com.akin.casestudy.ui.adapters.SearchAdapter
 import com.akin.casestudy.ui.fragment.basefragment.BaseFragment
+import com.akin.casestudy.util.Constants.Companion.LIMIT
+import com.akin.casestudy.util.Constants.Companion.OFFSET
 
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
 
-    companion object{
-        var staticQuery:String = ""
-    }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    companion object {
+        var staticQuery: String = ""
+        var staticCategory: String = ""
 
     }
 
     private lateinit var searchViewModel: SearchViewModel
-    private lateinit var images: List<Int>
-    private lateinit var names: List<String>
+    private lateinit var gridLayoutManager: GridLayoutManager
+    private val list: ArrayList<PureCollectionModel> by lazy { arrayListOf() }
+    private val categoriesViewModel: CategoriesViewModel by viewModels()
+    private val rcAdapter = SearchAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //insert data for Categories only one time
+        val prefs = requireActivity()
+            .getSharedPreferences("pref", Context.MODE_PRIVATE)
+        val firstStart = prefs.getBoolean("firstStartHome", true)
+
+        if (firstStart) {
+            categoriesViewModel.insertDataForCategories()
+            val prefs: SharedPreferences =
+                requireActivity().getSharedPreferences("pref", Context.MODE_PRIVATE)
+            val editor = prefs.edit()
+            editor.putBoolean("firstStartHome", false)
+            editor.apply()
+        }
 
         categoriesRcInit()
         val repository = CollectionRepository()
         val viewModelFactory = SearchViewModelFactory(repository)
         searchViewModel = ViewModelProvider(this, viewModelFactory).get(SearchViewModel::class.java)
+        gridLayoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+        initSearchRc()
         searchViewListener()
-
     }
 
     private fun categoriesRcInit() {
-        images = listOf(
-            R.drawable.movie_icon,
-            R.drawable.musics_icon,
-            R.drawable.app_store_icon,
-            R.drawable.ic__055107_bookshelf_books_library_icon,
+        categoriesViewModel.readAllData.observe(viewLifecycleOwner, {
+            val adapter = CategoriesAdapter(it) { category ->
+                list.clear()
+                println(category)
+                println(staticQuery)
+                searchViewModel.getCollections(staticQuery, category, 20, OFFSET)
+                staticCategory = category
+            }
+            binding.rcCategories.adapter = adapter
 
-            )
-        names = listOf(
-            "Movie",
-            "Music",
-            "Apps",
-            "Books",
-        )
 
-        val adapter = CategoriesAdapter(nameList = names, imageList = images){names->
-            println(names)
-            println(staticQuery)
-            searchViewModel.getCollections(staticQuery,names)
-        }
-        binding.rcCategories.adapter = adapter
+        })
 
     }
 
+
+    private fun setDataByApi(term: String) {
+
+        searchViewModel.getCollections(term, "", 20, OFFSET)
+        searchViewModel.collectionList.observe(viewLifecycleOwner, { response ->
+            list.clear()
+            list.addAll(response)
+            println(list.size)
+            rcAdapter.loadCollectionsData(list)
+
+        })
+    }
+
+    fun showRecentlyViews() {
+        binding.rcRecentlySearched.visibility = View.VISIBLE
+        binding.recentlySearchedText.visibility = View.VISIBLE
+        searchViewModel.getCollections("", "", 20, 0)
+    }
+
+    fun goneRecentlyViews() {
+
+        binding.rcRecentlySearched.visibility = View.GONE
+        binding.recentlySearchedText.visibility = View.GONE
+    }
+
+
+    private fun checkRecyclerViewToEnd() {
+        binding.rcSearched.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!binding.rcSearched.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    loadMore()
+                }
+            }
+
+        })
+
+    }
     private fun searchViewListener() {
 
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.searchEditView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query?.length!! > 2) {
                     staticQuery = query
                     setDataByApi(query)
                 }
-
-
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText?.isEmpty() == true) {
-                    binding.rcRecentlySearched.visibility = View.VISIBLE
-                    binding.recentlySearchedText.visibility = View.VISIBLE
-                    binding.rcSearched.visibility = View.GONE
 
+                if (newText?.isEmpty() == true) {
+                    showRecentlyViews()
                 } else {
                     if (newText?.length!! > 2) {
+                        list.clear()
                         staticQuery = newText
                         setDataByApi(newText)
                     }
-                    binding.rcSearched.visibility = View.VISIBLE
-                    binding.rcRecentlySearched.visibility = View.GONE
-                    binding.recentlySearchedText.visibility = View.GONE
+                    goneRecentlyViews()
                 }
                 return true
             }
         })
     }
 
-    private fun setDataByApi(term: String) {
-        val gridLayoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-        binding.rcSearched.layoutManager = gridLayoutManager
-        try {
-            searchViewModel.getCollections(term, "")
-        } catch (e1: Exception) {
-            println(e1.toString())
-        }
-        searchViewModel.collectionList.observe(viewLifecycleOwner) { response ->
-            val rcAdapter = SearchAdapter(response)
-            binding.rcSearched.adapter = rcAdapter
-
-        }
+    private fun loadMore() {
+        println("stateopen" + LIMIT)
+        LIMIT += 20
+        searchViewModel.getCollections(staticQuery, staticCategory, LIMIT, OFFSET)
     }
 
+    private fun initSearchRc() {
+        binding.rcSearched.layoutManager = gridLayoutManager
+        rcAdapter.clickListener = { data ->
+            val action =
+                SearchFragmentDirections.actionSearchFragmentToDetailFragment(data)
+            findNavController().navigate(action)
+        }
+        binding.rcSearched.adapter = rcAdapter
 
+        checkRecyclerViewToEnd()
+    }
 }

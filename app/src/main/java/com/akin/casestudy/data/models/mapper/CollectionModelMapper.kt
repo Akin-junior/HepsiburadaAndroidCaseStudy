@@ -5,9 +5,16 @@ import com.akin.casestudy.data.models.Result
 fun Result.toDomain(): PureCollectionModel {
 
     return PureCollectionModel(
-        collectionName = collectionName,
-        collectionPrice = collectionPrice,
-        imageUrl = artworkUrl100,
-        releaseDate = releaseDate
+        collectionName,
+        collectionPrice,
+        artworkUrl100,
+        releaseDate,
+        artistName,
+        price,
+        trackName,
+        description,
+        shortDescription,
+        previewUrl
+
     )
 }

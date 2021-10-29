@@ -14,5 +14,5 @@ interface CategoriesDao {
    suspend fun addCategories(categories:CategoriesModel)
 
     @Query("SELECT * FROM categories_table ORDER BY id ASC")
-   fun readAllData() : List<CategoriesModel>
+   fun readAllData() : LiveData< List<CategoriesModel>>
 }

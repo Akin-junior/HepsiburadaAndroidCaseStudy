@@ -1,4 +1,4 @@
-package com.akin.casestudy.api
+package com.akin.casestudy.data.api
 
 import com.akin.casestudy.util.Constants.Companion.BASE_URL
 import retrofit2.Retrofit

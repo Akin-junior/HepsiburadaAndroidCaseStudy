@@ -13,4 +13,5 @@
     <color name="buttonColor">#34D381</color>
     <color name="bgColor">#151515</color>
     <color name="itemBgColor">#E81E1E1E</color>
+    <color name="demo_dark_transparent">#24000000</color>
 </resources>

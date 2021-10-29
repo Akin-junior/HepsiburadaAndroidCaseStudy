@@ -10,7 +10,7 @@ fun ImageView.loadInt(imgUrl:Int) {
         .into(this)
 
 }
-fun ImageView.loadString(imgUrl:String) {
+fun ImageView.loadString(imgUrl: String?) {
     Glide.with(context)
         .load(imgUrl)
         .circleCrop()

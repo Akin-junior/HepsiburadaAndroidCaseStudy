@@ -1,4 +1,4 @@
-package com.akin.casestudy.api
+package com.akin.casestudy.data.api
 
 import com.akin.casestudy.data.models.CollectionModels
 import retrofit2.Response
@@ -9,8 +9,9 @@ interface IRetrofit {
     @GET("search")
     suspend fun getSpesificName(
         @Query("term") artistName: String,
-        @Query("media") mediaType: String,
-        @Query("limit") limit: Int=20,
+        @Query("entity") entity: String,
+        @Query("limit") limit: Int,
+        @Query("offset") offset: Int,
     ): Response<CollectionModels>
 
 }

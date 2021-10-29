@@ -5,9 +5,9 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/bgColor"
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".ui.activity.MainActivity">
 
         <androidx.fragment.app.FragmentContainerView
@@ -21,4 +21,5 @@
             app:navGraph="@navigation/nav_main" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

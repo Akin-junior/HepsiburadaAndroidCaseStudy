@@ -1,21 +1,25 @@
 package com.akin.casestudy.ui.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.akin.casestudy.data.models.mapper.PureCollectionModel
 import com.akin.casestudy.databinding.CollectionsItemBinding
-import com.akin.casestudy.databinding.FragmentSearchBinding
 import com.akin.casestudy.ui.fragment.SearchFragmentDirections
 import com.akin.casestudy.util.loadString
 
-class SearchAdapter(private val pureCollectionList: List<PureCollectionModel>) :
+class SearchAdapter(
+
+    var clickListener: (data: PureCollectionModel) -> Unit = {}
+) :
     RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
     class SearchViewHolder(val binding: CollectionsItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
     }
+    private var itemsList: List<PureCollectionModel> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val binding =
@@ -25,20 +29,39 @@ class SearchAdapter(private val pureCollectionList: List<PureCollectionModel>) :
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        val pureCollectionListed = pureCollectionList[position]
+        val pureCollectionListed = itemsList[position]
         holder.binding.apply {
-            collectionNameText.text = pureCollectionListed.collectionName
-            collectionPriceText.text = pureCollectionListed.collectionPrice.toString()
+            when {
+                pureCollectionListed.collectionName.isNullOrEmpty() -> {
+                    collectionNameText.text = pureCollectionListed.trackName
+                    collectionPriceText.text = pureCollectionListed.price.toString()
+
+                }
+                pureCollectionListed.collectionPrice!!.isNaN() -> {
+                    collectionPriceText.text = pureCollectionListed.price.toString()
+                    collectionNameText.text = pureCollectionListed.trackName
+                }
+                else -> {
+                    collectionNameText.text = pureCollectionListed.collectionName
+                    collectionPriceText.text = pureCollectionListed.collectionPrice.toString()
+                }
+            }
             releaseDateText.text = pureCollectionListed.releaseDate
             cardImage.loadString(pureCollectionListed.imageUrl)
             cardViewCollections.setOnClickListener {
-                val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(pureCollectionList[position])
-                it.findNavController().navigate(action)
+                clickListener(pureCollectionListed)
+
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return pureCollectionList.size
+        return itemsList.size
     }
+    @SuppressLint("NotifyDataSetChanged")
+    fun loadCollectionsData(items:List<PureCollectionModel>){
+        this.itemsList = items
+        notifyDataSetChanged()
+    }
+
 }
