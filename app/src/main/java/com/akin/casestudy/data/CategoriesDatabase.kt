@@ -3,11 +3,12 @@ package com.akin.casestudy.data
 import android.app.Application
 import androidx.room.*
 import com.akin.casestudy.data.models.CategoriesModel
+import com.akin.casestudy.data.models.LastSearchedModel
 
-@Database(entities = [CategoriesModel::class], version = 1, exportSchema = false)
+@Database(entities = [CategoriesModel::class,LastSearchedModel::class], version = 1, exportSchema = false)
 abstract class CategoriesDatabase : RoomDatabase() {
     abstract fun categoriesDao(): CategoriesDao
-   // abstract fun lastSearchedDao(): LastSearchedDao
+    abstract fun lastSearchedDao(): LastSearchedDao
 
     companion object {
         @Volatile

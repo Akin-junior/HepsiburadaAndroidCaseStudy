@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.akin.casestudy.data.models.mapper.PureCollectionModel
 import com.akin.casestudy.databinding.FragmentSearchBinding
 import com.akin.casestudy.domain.CategoriesViewModel
+import com.akin.casestudy.domain.LastSearchedViewModel
 import com.akin.casestudy.domain.SearchViewModel
 import com.akin.casestudy.domain.factory.SearchViewModelFactory
 import com.akin.casestudy.domain.repository.CollectionRepository
@@ -34,13 +35,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     companion object {
         var staticQuery: String = ""
         var staticCategory: String = ""
-
     }
 
     private lateinit var searchViewModel: SearchViewModel
     private lateinit var gridLayoutManager: GridLayoutManager
     private val list: ArrayList<PureCollectionModel> by lazy { arrayListOf() }
     private val categoriesViewModel: CategoriesViewModel by viewModels()
+    private val lastSearchedViewModel: LastSearchedViewModel by viewModels()
     private val rcAdapter = SearchAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,7 +60,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
             editor.putBoolean("firstStartHome", false)
             editor.apply()
         }
-
         categoriesRcInit()
         val repository = CollectionRepository()
         val viewModelFactory = SearchViewModelFactory(repository)
@@ -67,21 +67,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         gridLayoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
         initSearchRc()
         searchViewListener()
+        lastSearchedViewModel
     }
 
-    private fun categoriesRcInit() {
-        categoriesViewModel.readAllData.observe(viewLifecycleOwner, {
-            val adapter = CategoriesAdapter(it) { category ->
-                list.clear()
-                println(category)
-                println(staticQuery)
-                searchViewModel.getCollections(staticQuery, category, 20, OFFSET)
-                staticCategory = category
-            }
-            binding.rcCategories.adapter = adapter
 
-        })
-    }
 
     private fun setDataByApi(term: String) {
         searchViewModel.getCollections(term, "", 20, OFFSET)
@@ -121,7 +110,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     private fun searchViewListener() {
-
         binding.searchEditView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -151,8 +139,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
     private fun loadMore() {
         println("stateopen" + LIMIT)
-        LIMIT += 20
-        searchViewModel.getCollections(staticQuery, staticCategory, LIMIT, OFFSET)
+
+        if (LIMIT < 200) {
+            LIMIT += 20
+            searchViewModel.getCollections(staticQuery, staticCategory, LIMIT, OFFSET)
+        }
     }
 
     private fun initSearchRc() {
@@ -165,6 +156,19 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         binding.rcSearched.adapter = rcAdapter
 
         checkRecyclerViewToEnd()
+    }
+    private fun categoriesRcInit() {
+        categoriesViewModel.readAllData.observe(viewLifecycleOwner, {
+            val adapter = CategoriesAdapter(it) { category ->
+                list.clear()
+                println(category)
+                println(staticQuery)
+                searchViewModel.getCollections(staticQuery, category, 20, OFFSET)
+                staticCategory = category
+            }
+            binding.rcCategories.adapter = adapter
+
+        })
     }
 
 }

@@ -13,10 +13,12 @@ fun Result.toDomain(): PureCollectionModel {
         price,
         trackName,
         description,
-        shortDescription,
+        longDescription,
         previewUrl,
         genres,
-        primaryGenreName
+        primaryGenreName,
+        kind,
+        formattedPrice
 
     )
 }

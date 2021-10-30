@@ -12,7 +12,6 @@
         android:background="@drawable/categories_notseleceted_bg"
         android:gravity="center"
         android:orientation="horizontal"
-
         >
 
         <ImageView
@@ -27,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:gravity="center"
-            android:textColor="@color/textColor"
+            android:textColor="@color/subTextColor"
             android:textSize="12sp"
             tools:text="Appetizer" />
 

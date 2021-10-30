@@ -1,19 +1,13 @@
 package com.akin.casestudy.ui.adapters
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.akin.casestudy.data.models.mapper.PureCollectionModel
 import com.akin.casestudy.databinding.CollectionsItemBinding
-import com.akin.casestudy.ui.fragment.SearchFragmentDirections
 import com.akin.casestudy.util.loadString
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.*
+import com.akin.casestudy.util.makePlaceHolder
 
 class SearchAdapter(
 
@@ -34,27 +28,44 @@ class SearchAdapter(
         return SearchViewHolder(binding)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
         val pureCollectionListed = itemsList[position]
         holder.binding.apply {
-            when {
-                pureCollectionListed.collectionName.isNullOrEmpty() -> {
-                    collectionNameText.text = pureCollectionListed.trackName
-                    collectionPriceText.text = pureCollectionListed.price.toString()
+            when (pureCollectionListed.kind) {
+                "feature-movie" -> {
+                    collectionNameText.text =
+                        pureCollectionListed.collectionName ?: pureCollectionListed.trackName
+                    collectionPriceText.text = pureCollectionListed.collectionPrice.toString()+ "$"
+
                 }
-                pureCollectionListed.price!!.isNaN() -> {
-                    collectionPriceText.text = pureCollectionListed.collectionPrice.toString()
-                    collectionNameText.text = pureCollectionListed.collectionName
+                "software" -> {
+                    collectionNameText.text =
+                        pureCollectionListed.trackName ?: pureCollectionListed.artistName
+                    collectionPriceText.text = (pureCollectionListed.price
+                        ?: pureCollectionListed.formattedPrice).toString()+ "$"
+                }
+                "ebook" -> {
+                    collectionNameText.text =
+                        pureCollectionListed.trackName ?: pureCollectionListed.artistName
+                    collectionPriceText.text = (pureCollectionListed.price
+                        ?: pureCollectionListed.formattedPrice).toString()+ "$"
                 }
                 else -> {
                     collectionNameText.text = pureCollectionListed.collectionName
-                    collectionPriceText.text = pureCollectionListed.collectionPrice.toString()+"$"
+                    collectionPriceText.text = pureCollectionListed.collectionPrice.toString() + "$"
                 }
             }
 
+
+
             val readableDate = formatDate(pureCollectionListed.releaseDate.toString())
             releaseDateText.text = readableDate
-            cardImage.loadString(pureCollectionListed.imageUrl)
+            cardImage.loadString(
+                pureCollectionListed.imageUrl,
+                makePlaceHolder(holder.binding.root.context)
+            )
+
             cardViewCollections.setOnClickListener {
                 clickListener(pureCollectionListed)
 
