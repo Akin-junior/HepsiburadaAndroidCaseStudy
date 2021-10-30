@@ -16,9 +16,6 @@ class CustomTitleTextView constructor(context: Context, attributeSet: AttributeS
     init {
         setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.title_h1_size))
         setTextColor(ContextCompat.getColor(context, R.color.subTextColor))
-
-        //setTypeface(Typeface.createFromAsset(context.assets,"assets/poppinsblack.ttf"))
-
     }
 
 

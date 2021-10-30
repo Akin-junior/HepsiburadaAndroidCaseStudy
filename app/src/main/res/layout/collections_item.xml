@@ -20,6 +20,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:transitionName="transitionToDetail"
                 android:id="@+id/cardImage"
                 android:layout_width="95dp"
                 android:layout_height="95dp"

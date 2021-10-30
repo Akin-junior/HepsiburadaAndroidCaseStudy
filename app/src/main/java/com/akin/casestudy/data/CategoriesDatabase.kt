@@ -1,14 +1,16 @@
 package com.akin.casestudy.data
 
 import android.app.Application
-import androidx.room.*
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.akin.casestudy.data.models.CategoriesModel
-import com.akin.casestudy.data.models.LastSearchedModel
+import com.akin.casestudy.data.models.RecentlySearchedModel
 
-@Database(entities = [CategoriesModel::class,LastSearchedModel::class], version = 1, exportSchema = false)
+@Database(entities = [CategoriesModel::class,RecentlySearchedModel::class], version = 1, exportSchema = false)
 abstract class CategoriesDatabase : RoomDatabase() {
     abstract fun categoriesDao(): CategoriesDao
-    abstract fun lastSearchedDao(): LastSearchedDao
+    abstract fun lastSearchedDao(): RecentlySearchedDao
 
     companion object {
         @Volatile
@@ -30,22 +32,6 @@ abstract class CategoriesDatabase : RoomDatabase() {
                 return instance
             }
         }
-//        fun getLastSearchedDatabase(context: Application): CategoriesDatabase {
-//            val tempInstance = INSTANCE
-//            if (tempInstance != null) {
-//                return tempInstance
-//            }
-//            synchronized(this) {
-//                val instance = Room.databaseBuilder(
-//                    context.applicationContext,
-//                    CategoriesDatabase::class.java,
-//                    "lastSearched_database"
-//                ).build()
-//                INSTANCE = instance
-//
-//                return instance
-//            }
-//        }
     }
 
 }

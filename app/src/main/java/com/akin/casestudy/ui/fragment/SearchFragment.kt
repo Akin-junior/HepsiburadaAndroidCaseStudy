@@ -13,20 +13,21 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.akin.casestudy.data.models.LastSearchedModel
+import com.akin.casestudy.data.models.RecentlySearchedModel
 import com.akin.casestudy.data.models.mapper.PureCollectionModel
 import com.akin.casestudy.databinding.FragmentSearchBinding
-import com.akin.casestudy.domain.viewmodels.CategoriesViewModel
-import com.akin.casestudy.domain.viewmodels.LastSearchedViewModel
-import com.akin.casestudy.domain.viewmodels.SearchViewModel
 import com.akin.casestudy.domain.factory.SearchViewModelFactory
 import com.akin.casestudy.domain.repository.CollectionRepository
+import com.akin.casestudy.domain.viewmodels.CategoriesViewModel
+import com.akin.casestudy.domain.viewmodels.RecentlySearchedViewModel
+import com.akin.casestudy.domain.viewmodels.SearchViewModel
 import com.akin.casestudy.ui.adapters.CategoriesAdapter
 import com.akin.casestudy.ui.adapters.RecentlySearchedAdapter
 import com.akin.casestudy.ui.adapters.SearchAdapter
 import com.akin.casestudy.ui.fragment.basefragment.BaseFragment
 import com.akin.casestudy.util.Constants.Companion.LIMIT
 import com.akin.casestudy.util.Constants.Companion.OFFSET
+import com.akin.casestudy.util.makeBigger
 
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
@@ -40,7 +41,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     private lateinit var gridLayoutManager: GridLayoutManager
     private val list: ArrayList<PureCollectionModel> by lazy { arrayListOf() }
     private val categoriesViewModel: CategoriesViewModel by viewModels()
-    private val lastSearchedViewModel: LastSearchedViewModel by viewModels()
+    private val lastSearchedViewModel: RecentlySearchedViewModel by viewModels()
     private val rcAdapter = SearchAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -173,18 +174,19 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     private fun addLastSearchedData(data: PureCollectionModel) {
-        var datas = ""
+        var genres_ = ""
         data.genres?.forEach {
-            datas += "$it-"
+            genres_ += "$it-"
         }
-        println(datas)
 
-        val lastSearchedList = LastSearchedModel(
+        val bigImageUrl = data.imageUrl?.makeBigger()
+        println(bigImageUrl)
+        val lastSearchedList = RecentlySearchedModel(
             0,
             data.trackId,
             data.artistName,
             data.collectionPrice,
-            data.imageUrl,
+            bigImageUrl,
             data.releaseDate,
             data.artistName,
             data.price,
@@ -192,7 +194,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
             data.description,
             data.longDescription,
             data.previewUrl,
-            datas,
+            genres_,
             data.primaryGenreName,
             data.kind,
             data.formattedPrice

@@ -1,16 +1,19 @@
 package com.akin.casestudy.data.models
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.akin.casestudy.data.models.mapper.PureCollectionModel
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(
     tableName = "lastSearched_table",
     indices = [Index(value = ["track_id"], unique = true)]
 )
-data class LastSearchedModel(
+data class RecentlySearchedModel(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     @ColumnInfo(name = "track_id")
@@ -29,4 +32,4 @@ data class LastSearchedModel(
     val primaryGenreName: String?,
     val kind: String?,
     val formattedPrice: String?,
-)
+):Parcelable

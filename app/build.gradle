@@ -75,6 +75,8 @@ dependencies {
     //expo
     implementation 'com.google.android.exoplayer:exoplayer:2.15.1'
 
-
+    //lottie
+    def lottieVersion = "3.4.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 
 }

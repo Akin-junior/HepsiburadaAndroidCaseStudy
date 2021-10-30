@@ -4,12 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/motionLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bgColor"
-        app:layoutDescription="@xml/fragment_detail_xml_motionlayout_scene"
         tools:context=".ui.fragment.DetailFragment">
 
 
@@ -28,18 +27,10 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="TEST" />
 
-        <com.google.android.exoplayer2.ui.StyledPlayerView
-            app:use_controller="false"
-            android:id="@+id/videoPlayer"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent=".0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nameText" />
+
 
         <ImageView
-
+            android:transitionName="transitionToDetail"
             android:id="@+id/detailFragmentImageView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -47,7 +38,7 @@
             android:layout_marginBottom="10dp"
             app:cardCornerRadius="32dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent=".6"
+            app:layout_constraintHeight_percent=".5"
             app:layout_constraintHorizontal_bias="1.0"
 
             app:layout_constraintStart_toStartOf="parent"
@@ -69,18 +60,19 @@
             tools:text="price" />
 
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <androidx.appcompat.widget.AppCompatButton
+
             android:id="@+id/fabPlay"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:backgroundTint="@color/subTextColor"
-            android:contentDescription="TODO"
-            android:src="@drawable/ic_baseline_play_arrow_24"
-            app:fabCustomSize="100dp"
-            app:layout_constraintBottom_toBottomOf="@+id/detailFragmentImageView"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:background="@drawable/categories_bg"
+            android:text="@string/preview"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/scrollView"
+            app:layout_constraintEnd_toStartOf="@+id/priceText"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/detailFragmentImageView" />
+            app:layout_constraintTop_toBottomOf="@+id/detailFragmentImageView"
+            tools:visibility="visible" />
 
         <ScrollView
             android:id="@+id/scrollView"
@@ -101,5 +93,5 @@
         </ScrollView>
 
 
-    </androidx.constraintlayout.motion.widget.MotionLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

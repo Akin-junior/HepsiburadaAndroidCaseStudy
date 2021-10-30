@@ -4,10 +4,9 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.akin.casestudy.data.models.LastSearchedModel
+import com.akin.casestudy.data.models.RecentlySearchedModel
 import com.akin.casestudy.data.models.mapper.PureCollectionModel
 import com.akin.casestudy.databinding.RecentlySearchedItemBinding
-import com.akin.casestudy.util.loadString
 import com.akin.casestudy.util.loadStringForDetailPage
 import com.akin.casestudy.util.makeBigger
 import com.akin.casestudy.util.makePlaceHolder
@@ -18,8 +17,8 @@ class RecentlySearchedAdapter() :
         RecyclerView.ViewHolder(binding.root) {
 
     }
-
-    private var itemsList: List<LastSearchedModel> = mutableListOf()
+    var clickListener: (data: RecentlySearchedModel) -> Unit = {}
+    private var itemsList: List<RecentlySearchedModel> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentlySearchedViewHolder {
         val binding =
             RecentlySearchedItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -29,11 +28,15 @@ class RecentlySearchedAdapter() :
     override fun onBindViewHolder(holder: RecentlySearchedViewHolder, position: Int) {
         holder.binding.apply {
             val itemListed = itemsList[position]
+
             rcRecentlySearchedImage.loadStringForDetailPage(
-                itemListed.imageUrl?.makeBigger(),
+                itemListed.imageUrl,
                 makePlaceHolder(holder.itemView.context)
             )
             nameText.text = itemListed.collectionName ?: itemListed.artistName
+            clickListener = {
+
+            }
         }
     }
 
@@ -42,7 +45,7 @@ class RecentlySearchedAdapter() :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun addDataForRc(items: List<LastSearchedModel>) {
+    fun addDataForRc(items: List<RecentlySearchedModel>) {
         this.itemsList = items
         notifyDataSetChanged()
     }
