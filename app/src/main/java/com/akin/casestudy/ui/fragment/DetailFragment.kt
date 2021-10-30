@@ -6,16 +6,12 @@ import android.text.Html
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.GONE
-import androidx.core.content.ContextCompat
-import androidx.core.text.htmlEncode
-import androidx.core.text.parseAsHtml
-import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.navArgs
-import com.akin.casestudy.R
 import com.akin.casestudy.databinding.FragmentDetailBinding
 import com.akin.casestudy.ui.fragment.basefragment.BaseFragment
 import com.akin.casestudy.util.loadString
 import com.akin.casestudy.util.loadStringForDetailPage
+import com.akin.casestudy.util.makeBigger
 import com.akin.casestudy.util.makePlaceHolder
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -40,14 +36,11 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
 
     @SuppressLint("SetTextI18n")
     fun getNecessaryInfo() {
-        val uri = args.collectionItem.previewUrl
+
         binding.apply {
-            //we convert to image to bigger
             try {
-                val biggerImage =
-                    args.collectionItem.imageUrl?.replace("100x100bb.jpg", "500x500bb.jpg")
                 detailFragmentImageView.loadStringForDetailPage(
-                    biggerImage,
+                    args.collectionItem.imageUrl?.makeBigger(),
                     makePlaceHolder(requireContext())
 
                 )
@@ -97,7 +90,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    fun playPreview(){
+    fun playPreview() {
         var isClick = false
         val first =
             MediaItem.fromUri(args.collectionItem.previewUrl.toString())
@@ -107,11 +100,11 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
             player.setMediaItem(first)
             player.prepare()
             fabPlay.setOnTouchListener { view, motionEvent ->
-                if (motionEvent.action== MotionEvent.ACTION_UP){
-                    isClick = if (!isClick){
+                if (motionEvent.action == MotionEvent.ACTION_UP) {
+                    isClick = if (!isClick) {
                         player.play()
                         !isClick
-                    }else{
+                    } else {
                         player.pause()
                         false
                     }

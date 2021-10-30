@@ -1,4 +1,4 @@
-package com.akin.casestudy.domain
+package com.akin.casestudy.domain.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -31,7 +31,7 @@ class CategoriesViewModel(application: Application) : AndroidViewModel(applicati
     }
     fun insertDataForCategories(){
         val categories = CategoriesModel(0, "movie", R.drawable.movie_icon, "Movie")
-        val categories2 = CategoriesModel(0, "music", R.drawable.musics_icon, "Musics")
+        val categories2 = CategoriesModel(0, "song", R.drawable.musics_icon, "Musics")
         val categories3 = CategoriesModel(0, "software", R.drawable.app_store_icon, "Apps")
         val categories4 = CategoriesModel(0, "ebook", R.drawable.ic__055107_bookshelf_books_library_icon, "Books")
         addCategories(categories)

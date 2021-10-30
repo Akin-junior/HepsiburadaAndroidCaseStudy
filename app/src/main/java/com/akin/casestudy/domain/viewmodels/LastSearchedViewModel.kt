@@ -1,4 +1,4 @@
-package com.akin.casestudy.domain
+package com.akin.casestudy.domain.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

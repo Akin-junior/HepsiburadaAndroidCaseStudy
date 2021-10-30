@@ -20,5 +20,6 @@ data class PureCollectionModel(
     val primaryGenreName: String?,
     val kind: String?,
     val formattedPrice: String?,
+    val trackId: Int?,
 
 ) :Parcelable

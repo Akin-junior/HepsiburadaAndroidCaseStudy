@@ -11,24 +11,22 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.akin.casestudy.data.models.LastSearchedModel
 import com.akin.casestudy.data.models.mapper.PureCollectionModel
 import com.akin.casestudy.databinding.FragmentSearchBinding
-import com.akin.casestudy.domain.CategoriesViewModel
-import com.akin.casestudy.domain.LastSearchedViewModel
-import com.akin.casestudy.domain.SearchViewModel
+import com.akin.casestudy.domain.viewmodels.CategoriesViewModel
+import com.akin.casestudy.domain.viewmodels.LastSearchedViewModel
+import com.akin.casestudy.domain.viewmodels.SearchViewModel
 import com.akin.casestudy.domain.factory.SearchViewModelFactory
 import com.akin.casestudy.domain.repository.CollectionRepository
 import com.akin.casestudy.ui.adapters.CategoriesAdapter
+import com.akin.casestudy.ui.adapters.RecentlySearchedAdapter
 import com.akin.casestudy.ui.adapters.SearchAdapter
 import com.akin.casestudy.ui.fragment.basefragment.BaseFragment
 import com.akin.casestudy.util.Constants.Companion.LIMIT
 import com.akin.casestudy.util.Constants.Companion.OFFSET
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
@@ -68,9 +66,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         gridLayoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
         initSearchRc()
         searchViewListener()
+        readLastSearchedData()
         lastSearchedViewModel
     }
-
 
 
     private fun setDataByApi(term: String) {
@@ -149,17 +147,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
     private fun initSearchRc() {
         binding.rcSearched.layoutManager = gridLayoutManager
-
         rcAdapter.clickListener = { data ->
-            var datas=""
-             data.genres?.forEach {
-                 datas+=it
-             }
-            println(datas)
-           val lastSearchedList = LastSearchedModel(0, data.artistName,data.collectionPrice,data.imageUrl,data.releaseDate,
-               data.artistName,data.price,data.trackName,data.description,data.longDescription, data.previewUrl,
-               datas,data.primaryGenreName,data.kind,data.formattedPrice)
-            lastSearchedViewModel.addLastSearched(lastSearchedList)
+            addLastSearchedData(data = data)
             val action =
                 SearchFragmentDirections.actionSearchFragmentToDetailFragment(data)
             findNavController().navigate(action)
@@ -168,6 +157,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
         checkRecyclerViewToEnd()
     }
+
     private fun categoriesRcInit() {
         categoriesViewModel.readAllData.observe(viewLifecycleOwner, {
             val adapter = CategoriesAdapter(it) { category ->
@@ -179,6 +169,45 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
             }
             binding.rcCategories.adapter = adapter
 
+        })
+    }
+
+    private fun addLastSearchedData(data: PureCollectionModel) {
+        var datas = ""
+        data.genres?.forEach {
+            datas += "$it-"
+        }
+        println(datas)
+
+        val lastSearchedList = LastSearchedModel(
+            0,
+            data.trackId,
+            data.artistName,
+            data.collectionPrice,
+            data.imageUrl,
+            data.releaseDate,
+            data.artistName,
+            data.price,
+            data.trackName,
+            data.description,
+            data.longDescription,
+            data.previewUrl,
+            datas,
+            data.primaryGenreName,
+            data.kind,
+            data.formattedPrice
+        )
+
+        lastSearchedViewModel.addLastSearched(lastSearchedList)
+    }
+
+    private fun readLastSearchedData() {
+        lastSearchedViewModel.readAllData.observe(viewLifecycleOwner, {
+            binding.rcRecentlySearched.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            val lastSearchedAdapter = RecentlySearchedAdapter()
+            lastSearchedAdapter.addDataForRc(it)
+            binding.rcRecentlySearched.adapter = lastSearchedAdapter
         })
     }
 

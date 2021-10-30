@@ -2,7 +2,7 @@ package com.akin.casestudy.domain.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.akin.casestudy.domain.SearchViewModel
+import com.akin.casestudy.domain.viewmodels.SearchViewModel
 import com.akin.casestudy.domain.repository.CollectionRepository
 
 class SearchViewModelFactory(private val repository: CollectionRepository) : ViewModelProvider.Factory {

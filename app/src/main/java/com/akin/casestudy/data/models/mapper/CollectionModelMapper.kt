@@ -18,7 +18,8 @@ fun Result.toDomain(): PureCollectionModel {
         genres,
         primaryGenreName,
         kind,
-        formattedPrice
+        formattedPrice,
+        trackId
 
     )
 }

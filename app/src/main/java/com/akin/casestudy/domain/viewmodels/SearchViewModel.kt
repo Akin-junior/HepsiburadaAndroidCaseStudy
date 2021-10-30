@@ -1,4 +1,4 @@
-package com.akin.casestudy.domain
+package com.akin.casestudy.domain.viewmodels
 
 import androidx.lifecycle.*
 import com.akin.casestudy.data.models.mapper.PureCollectionModel

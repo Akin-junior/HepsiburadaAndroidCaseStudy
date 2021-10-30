@@ -45,4 +45,10 @@ fun makePlaceHolder(context: Context) : CircularProgressDrawable {
         centerRadius = 40f
         start()
     }
+
+}
+fun String.makeBigger():String{
+    val biggerImage =
+       this.replace("100x100bb.jpg", "500x500bb.jpg")
+    return biggerImage.toString()
 }
