@@ -24,7 +24,7 @@ class CategoriesViewModel(application: Application) : AndroidViewModel(applicati
 
     }
 
-    fun addCategories(categoriesModel: CategoriesModel) {
+    private fun addCategories(categoriesModel: CategoriesModel) {
         viewModelScope.launch(Dispatchers.IO) {
             categoriesRepository.addCategories(categoriesModel)
         }

@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.akin.casestudy.data.models.LastSearchedModel
 import com.akin.casestudy.data.models.mapper.PureCollectionModel
 import com.akin.casestudy.databinding.FragmentSearchBinding
 import com.akin.casestudy.domain.CategoriesViewModel
@@ -148,7 +149,17 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
     private fun initSearchRc() {
         binding.rcSearched.layoutManager = gridLayoutManager
+
         rcAdapter.clickListener = { data ->
+            var datas=""
+             data.genres?.forEach {
+                 datas+=it
+             }
+            println(datas)
+           val lastSearchedList = LastSearchedModel(0, data.artistName,data.collectionPrice,data.imageUrl,data.releaseDate,
+               data.artistName,data.price,data.trackName,data.description,data.longDescription, data.previewUrl,
+               datas,data.primaryGenreName,data.kind,data.formattedPrice)
+            lastSearchedViewModel.addLastSearched(lastSearchedList)
             val action =
                 SearchFragmentDirections.actionSearchFragmentToDetailFragment(data)
             findNavController().navigate(action)

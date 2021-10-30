@@ -3,6 +3,7 @@
     package="com.akin.casestudy">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -11,13 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CaseStudy">
         <activity
-            android:name=".ui.activity.MainActivity"
-            android:exported="true">
+            android:name=".ui.activity.SplashActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:exported="true">
+
         </activity>
     </application>
 

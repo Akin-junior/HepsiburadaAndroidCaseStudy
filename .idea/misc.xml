@@ -7,16 +7,20 @@
         <entry key="..\:/CaseStudy/app/src/main/res/drawable/bg_sharp_card.xml" value="0.36354166666666665" />
         <entry key="..\:/CaseStudy/app/src/main/res/drawable/categories_bg.xml" value="0.4010416666666667" />
         <entry key="..\:/CaseStudy/app/src/main/res/drawable/categories_notseleceted_bg.xml" value="0.4010416666666667" />
+        <entry key="..\:/CaseStudy/app/src/main/res/drawable/ic_baseline_play_arrow_24.xml" value="0.5358974358974359" />
         <entry key="..\:/CaseStudy/app/src/main/res/drawable/ic_launcher_background.xml" value="0.33125" />
         <entry key="..\:/CaseStudy/app/src/main/res/drawable/movie_icon.xml" value="0.4010416666666667" />
         <entry key="..\:/CaseStudy/app/src/main/res/drawable/musics_icon.xml" value="0.4010416666666667" />
         <entry key="..\:/CaseStudy/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/CaseStudy/app/src/main/res/layout/activity_splash.xml" value="0.38858695652173914" />
         <entry key="..\:/CaseStudy/app/src/main/res/layout/categories_item.xml" value="0.396875" />
         <entry key="..\:/CaseStudy/app/src/main/res/layout/collections_item.xml" value="0.33" />
-        <entry key="..\:/CaseStudy/app/src/main/res/layout/fragment_detail.xml" value="0.33" />
+        <entry key="..\:/CaseStudy/app/src/main/res/layout/fragment_bottom_sheet.xml" value="0.2" />
+        <entry key="..\:/CaseStudy/app/src/main/res/layout/fragment_detail.xml" value="0.25" />
         <entry key="..\:/CaseStudy/app/src/main/res/layout/fragment_search.xml" value="0.25" />
         <entry key="..\:/CaseStudy/app/src/main/res/layout/gridlayout_loading.xml" value="0.34739583333333335" />
         <entry key="..\:/CaseStudy/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.33125" />
+        <entry key="..\:/CaseStudy/app/src/main/res/xml/activity_splash_scene.xml" value="0.38858695652173914" />
       </map>
     </option>
   </component>

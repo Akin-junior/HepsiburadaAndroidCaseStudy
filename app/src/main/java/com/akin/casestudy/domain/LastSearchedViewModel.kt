@@ -24,9 +24,9 @@ class LastSearchedViewModel(application: Application) : AndroidViewModel(applica
 
     }
 
-    fun addLastSearched(pureCollectionModel: LastSearchedModel) {
+    fun addLastSearched(lastSearchedModel: LastSearchedModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            lastSearchedRepository.addLastSearched(pureCollectionModel)
+            lastSearchedRepository.addLastSearched(lastSearchedModel)
         }
     }
 }
