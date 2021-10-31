@@ -28,11 +28,13 @@ class RecentlySearchedViewModel(application: Application) : AndroidViewModel(app
             recentlySearchedRepository.addLastSearched(lastSearchedModel)
         }
     }
+
     fun deleteSingleRecentlySearched(lastSearchedModel: RecentlySearchedModel) {
         viewModelScope.launch(Dispatchers.IO) {
             recentlySearchedRepository.deleteSingle(lastSearchedModel)
         }
     }
+
     fun deleteAllRecentlySearchedData() {
         viewModelScope.launch(Dispatchers.IO) {
             recentlySearchedRepository.deleteAll()

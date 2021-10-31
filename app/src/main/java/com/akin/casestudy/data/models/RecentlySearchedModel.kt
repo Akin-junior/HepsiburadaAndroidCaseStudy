@@ -5,7 +5,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.akin.casestudy.data.models.mapper.PureCollectionModel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -17,7 +16,7 @@ data class RecentlySearchedModel(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     @ColumnInfo(name = "track_id")
-    var trackId:Int?,
+    var trackId: Int?,
     var collectionName: String?,
     val collectionPrice: Double?,
     val imageUrl: String?,
@@ -32,4 +31,4 @@ data class RecentlySearchedModel(
     val primaryGenreName: String?,
     val kind: String?,
     val formattedPrice: String?,
-):Parcelable
+) : Parcelable

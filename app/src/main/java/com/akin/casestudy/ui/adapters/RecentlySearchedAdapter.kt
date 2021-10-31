@@ -5,10 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.akin.casestudy.data.models.RecentlySearchedModel
-import com.akin.casestudy.data.models.mapper.PureCollectionModel
 import com.akin.casestudy.databinding.RecentlySearchedItemBinding
 import com.akin.casestudy.util.loadStringForDetailPage
-import com.akin.casestudy.util.makeBigger
 import com.akin.casestudy.util.makePlaceHolder
 
 class RecentlySearchedAdapter() :
@@ -17,7 +15,8 @@ class RecentlySearchedAdapter() :
         RecyclerView.ViewHolder(binding.root) {
 
     }
-     var clickListener: (data: RecentlySearchedModel) -> Unit = {}
+
+    var clickListener: (data: RecentlySearchedModel) -> Unit = {}
     private var itemsList: List<RecentlySearchedModel> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentlySearchedViewHolder {
         val binding =

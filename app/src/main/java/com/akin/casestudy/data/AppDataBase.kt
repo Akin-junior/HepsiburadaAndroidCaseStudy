@@ -7,7 +7,11 @@ import androidx.room.RoomDatabase
 import com.akin.casestudy.data.models.CategoriesModel
 import com.akin.casestudy.data.models.RecentlySearchedModel
 
-@Database(entities = [CategoriesModel::class,RecentlySearchedModel::class], version = 1, exportSchema = false)
+@Database(
+    entities = [CategoriesModel::class, RecentlySearchedModel::class],
+    version = 1,
+    exportSchema = false
+)
 abstract class AppDataBase : RoomDatabase() {
     abstract fun categoriesDao(): CategoriesDao
     abstract fun lastSearchedDao(): RecentlySearchedDao

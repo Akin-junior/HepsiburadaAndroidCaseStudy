@@ -1,9 +1,8 @@
 package com.akin.casestudy.util
 
 
-
 class Statics {
-    companion object{
+    companion object {
         const val BASE_URL = "https://itunes.apple.com/"
         var LIMIT = 20
         var staticQuery: String = ""

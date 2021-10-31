@@ -6,7 +6,11 @@ import retrofit2.Response
 
 class SearchRepository {
 
-   suspend fun getCustomCollection(artistName: String, entity:String, limit:Int) : Response<CollectionModels> {
-        return RetrofitInstance.api.getSpesificName(artistName,entity,limit)
+    suspend fun getCustomCollection(
+        artistName: String,
+        entity: String,
+        limit: Int
+    ): Response<CollectionModels> {
+        return RetrofitInstance.api.getSpesificName(artistName, entity, limit)
     }
 }

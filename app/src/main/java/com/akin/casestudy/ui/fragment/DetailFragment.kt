@@ -4,7 +4,8 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Html
 import android.view.View
-import android.view.View.*
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.navArgs
 import com.akin.casestudy.R
@@ -118,6 +119,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
             videoPreviewFragment.show(it1, "TAG")
         }
     }
+
     private fun formatDate(returnDate: String): String {
         val readableText = returnDate.split("T")
         return readableText[0]

@@ -1,6 +1,5 @@
 package com.akin.casestudy.data.models.mapper
 
-import android.os.Parcel
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
@@ -22,4 +21,4 @@ data class PureCollectionModel(
     val formattedPrice: String?,
     val trackId: Int?,
 
-) :Parcelable
+    ) : Parcelable

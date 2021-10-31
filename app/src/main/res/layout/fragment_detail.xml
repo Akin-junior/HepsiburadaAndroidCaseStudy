@@ -82,7 +82,7 @@
             android:padding="8dp"
             android:textColor="@color/altTextColor"
             android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/collectionNameText"
             app:layout_constraintTop_toBottomOf="@+id/collectionNameText"
             tools:text="artistname" />
 
@@ -90,6 +90,7 @@
             android:id="@+id/priceText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:ellipsize="end"
             android:fontFamily="@font/poppinsregular"
             android:includeFontPadding="false"
@@ -97,8 +98,7 @@
             android:padding="8dp"
             android:textColor="@color/altTextColor"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/introduction"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/artistNameText"
             app:layout_constraintTop_toBottomOf="@+id/artistNameText"
             tools:text="price" />
 
@@ -106,22 +106,24 @@
             android:id="@+id/introduction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/poppinsmedium"
             android:includeFontPadding="false"
             android:padding="8dp"
             android:text="@string/introduction"
             android:textColor="@color/subTextColor"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/scrollView"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="@+id/priceText"
+            app:layout_constraintTop_toBottomOf="@+id/priceText" />
 
 
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/introduction">
 
             <TextView
                 android:id="@+id/detailText"

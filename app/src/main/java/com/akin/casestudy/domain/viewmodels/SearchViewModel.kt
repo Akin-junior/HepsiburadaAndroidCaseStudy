@@ -1,6 +1,9 @@
 package com.akin.casestudy.domain.viewmodels
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.akin.casestudy.data.models.mapper.PureCollectionModel
 import com.akin.casestudy.data.models.mapper.toDomain
 import com.akin.casestudy.domain.repository.SearchRepository
@@ -11,7 +14,7 @@ class SearchViewModel(private val repository: SearchRepository) : ViewModel() {
     private val _collectionList = MutableLiveData<List<PureCollectionModel>>()
     val collectionList: LiveData<List<PureCollectionModel>> = _collectionList
 
-    fun getCollections(artistName: String, entity: String, limit: Int)  {
+    fun getCollections(artistName: String, entity: String, limit: Int) {
 
         viewModelScope.launch {
             val response = repository.getCustomCollection(artistName, entity, limit)

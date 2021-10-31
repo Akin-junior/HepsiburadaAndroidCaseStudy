@@ -17,5 +17,5 @@ interface RecentlySearchedDao {
     suspend fun deleteAllData()
 
     @Query("SELECT * FROM lastSearched_table ORDER BY id DESC")
-    fun readAllData() : LiveData<List<RecentlySearchedModel>>
+    fun readAllData(): LiveData<List<RecentlySearchedModel>>
 }

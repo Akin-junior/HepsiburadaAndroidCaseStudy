@@ -71,7 +71,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         binding.rcRecentlySearched.visibility = View.VISIBLE
         binding.recentlySearchedText.visibility = View.VISIBLE
         binding.trashIcon.visibility = View.VISIBLE
-        searchViewModel.getCollections("", "", 20,)
+        searchViewModel.getCollections("", "", 20)
     }
 
     fun goneRecentlyViews() {

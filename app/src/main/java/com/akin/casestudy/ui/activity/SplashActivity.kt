@@ -3,12 +3,10 @@ package com.akin.casestudy.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.motion.widget.MotionLayout
-import androidx.fragment.app.viewModels
-import com.akin.casestudy.R
 import com.akin.casestudy.databinding.ActivityMainBinding
 import com.akin.casestudy.databinding.ActivitySplashBinding
 import com.akin.casestudy.domain.viewmodels.CategoriesViewModel
@@ -22,7 +20,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
         checkIfFirst()
 
-       binding.motionLayout.addTransitionListener(object : MotionLayout.TransitionListener {
+        binding.motionLayout.addTransitionListener(object : MotionLayout.TransitionListener {
             override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
 
             }
@@ -40,7 +38,8 @@ class SplashActivity : AppCompatActivity() {
 
         })
     }
-    private  fun checkIfFirst(){
+
+    private fun checkIfFirst() {
         //insert data for Categories only one time
         val prefs = this
             .getSharedPreferences("pref", Context.MODE_PRIVATE)

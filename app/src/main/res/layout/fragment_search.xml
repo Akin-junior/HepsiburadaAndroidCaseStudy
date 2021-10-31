@@ -27,18 +27,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-            <!--            <androidx.appcompat.widget.AppCompatEditText-->
-            <!--                android:hint="@string/search_your_desire"-->
-            <!--                android:textAlignment="center"-->
-            <!--                android:id="@+id/searchEditView"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="40dp"-->
-            <!--                android:layout_margin="16dp"-->
-            <!--                android:background="@drawable/categories_bg"-->
-            <!--                android:elevation="16dp"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toTopOf="parent" />-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcCategories"
@@ -76,7 +64,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:orientation="horizontal"
-
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@+id/recentlySearchedText" />
 

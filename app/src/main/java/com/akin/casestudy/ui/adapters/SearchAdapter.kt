@@ -36,27 +36,26 @@ class SearchAdapter(
                 "feature-movie" -> {
                     collectionNameText.text =
                         pureCollectionListed.collectionName ?: pureCollectionListed.trackName
-                    collectionPriceText.text = pureCollectionListed.collectionPrice.toString()+ "$"
+                    collectionPriceText.text = pureCollectionListed.collectionPrice.toString() + "$"
 
                 }
                 "software" -> {
                     collectionNameText.text =
                         pureCollectionListed.trackName ?: pureCollectionListed.artistName
                     collectionPriceText.text = (pureCollectionListed.price
-                        ?: pureCollectionListed.formattedPrice).toString()+ "$"
+                        ?: pureCollectionListed.formattedPrice).toString() + "$"
                 }
                 "ebook" -> {
                     collectionNameText.text =
                         pureCollectionListed.trackName ?: pureCollectionListed.artistName
                     collectionPriceText.text = (pureCollectionListed.price
-                        ?: pureCollectionListed.formattedPrice).toString()+ "$"
+                        ?: pureCollectionListed.formattedPrice).toString() + "$"
                 }
                 else -> {
                     collectionNameText.text = pureCollectionListed.collectionName
                     collectionPriceText.text = pureCollectionListed.collectionPrice.toString() + "$"
                 }
             }
-
 
 
             val readableDate = formatDate(pureCollectionListed.releaseDate.toString())

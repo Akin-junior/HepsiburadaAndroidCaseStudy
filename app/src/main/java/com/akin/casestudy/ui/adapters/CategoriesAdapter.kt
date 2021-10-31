@@ -55,7 +55,7 @@ class CategoriesAdapter(
             }
         }
         holder.binding.linearLayout.setOnClickListener {
-            if (selectedItem!=position){
+            if (selectedItem != position) {
                 clickListener(categorizedList.name)
                 LIMIT = 20
             }
