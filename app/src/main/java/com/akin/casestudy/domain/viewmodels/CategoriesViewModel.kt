@@ -3,10 +3,9 @@ package com.akin.casestudy.domain.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.akin.casestudy.R
-import com.akin.casestudy.data.CategoriesDatabase
+import com.akin.casestudy.data.AppDataBase
 import com.akin.casestudy.data.models.CategoriesModel
 import com.akin.casestudy.domain.repository.CategoriesRepository
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +17,7 @@ class CategoriesViewModel(application: Application) : AndroidViewModel(applicati
     private var categoriesRepository: CategoriesRepository
 
     init {
-        val categoriesDao = CategoriesDatabase.getDatabase(application).categoriesDao()
+        val categoriesDao = AppDataBase.getDatabase(application).categoriesDao()
         categoriesRepository = CategoriesRepository(categoriesDao)
         readAllData = categoriesRepository.readAllData
 

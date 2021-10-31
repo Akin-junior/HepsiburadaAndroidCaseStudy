@@ -8,15 +8,15 @@ import com.akin.casestudy.data.models.CategoriesModel
 import com.akin.casestudy.data.models.RecentlySearchedModel
 
 @Database(entities = [CategoriesModel::class,RecentlySearchedModel::class], version = 1, exportSchema = false)
-abstract class CategoriesDatabase : RoomDatabase() {
+abstract class AppDataBase : RoomDatabase() {
     abstract fun categoriesDao(): CategoriesDao
     abstract fun lastSearchedDao(): RecentlySearchedDao
 
     companion object {
         @Volatile
-        private var INSTANCE: CategoriesDatabase? = null
+        private var INSTANCE: AppDataBase? = null
 
-        fun getDatabase(context: Application): CategoriesDatabase {
+        fun getDatabase(context: Application): AppDataBase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
                 return tempInstance
@@ -24,7 +24,7 @@ abstract class CategoriesDatabase : RoomDatabase() {
             synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    CategoriesDatabase::class.java,
+                    AppDataBase::class.java,
                     "categories_database"
                 ).build()
                 INSTANCE = instance

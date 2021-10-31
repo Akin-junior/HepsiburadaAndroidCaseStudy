@@ -1,7 +1,6 @@
 package com.akin.casestudy.ui.fragment
 
-import android.content.Context
-import android.content.SharedPreferences
+import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -17,7 +16,7 @@ import com.akin.casestudy.data.models.RecentlySearchedModel
 import com.akin.casestudy.data.models.mapper.PureCollectionModel
 import com.akin.casestudy.databinding.FragmentSearchBinding
 import com.akin.casestudy.domain.factory.SearchViewModelFactory
-import com.akin.casestudy.domain.repository.CollectionRepository
+import com.akin.casestudy.domain.repository.SearchRepository
 import com.akin.casestudy.domain.viewmodels.CategoriesViewModel
 import com.akin.casestudy.domain.viewmodels.RecentlySearchedViewModel
 import com.akin.casestudy.domain.viewmodels.SearchViewModel
@@ -25,56 +24,40 @@ import com.akin.casestudy.ui.adapters.CategoriesAdapter
 import com.akin.casestudy.ui.adapters.RecentlySearchedAdapter
 import com.akin.casestudy.ui.adapters.SearchAdapter
 import com.akin.casestudy.ui.fragment.basefragment.BaseFragment
-import com.akin.casestudy.util.Constants.Companion.LIMIT
-import com.akin.casestudy.util.Constants.Companion.OFFSET
+import com.akin.casestudy.util.Statics.Companion.LIMIT
+import com.akin.casestudy.util.Statics.Companion.staticCategory
+import com.akin.casestudy.util.Statics.Companion.staticQuery
 import com.akin.casestudy.util.makeBigger
 
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
 
-    companion object {
-        var staticQuery: String = ""
-        var staticCategory: String = ""
-    }
-
     private lateinit var searchViewModel: SearchViewModel
     private lateinit var gridLayoutManager: GridLayoutManager
     private val list: ArrayList<PureCollectionModel> by lazy { arrayListOf() }
-    private val categoriesViewModel: CategoriesViewModel by viewModels()
-    private val lastSearchedViewModel: RecentlySearchedViewModel by viewModels()
+    private val recentlySearchedViewModel: RecentlySearchedViewModel by viewModels()
     private val rcAdapter = SearchAdapter()
+    private val categoriesViewModel: CategoriesViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //insert data for Categories only one time
-        val prefs = requireActivity()
-            .getSharedPreferences("pref", Context.MODE_PRIVATE)
-        val firstStart = prefs.getBoolean("firstStartHome", true)
-
-        if (firstStart) {
-            categoriesViewModel.insertDataForCategories()
-            val prefs: SharedPreferences =
-                requireActivity().getSharedPreferences("pref", Context.MODE_PRIVATE)
-            val editor = prefs.edit()
-            editor.putBoolean("firstStartHome", false)
-            editor.apply()
-        }
 
         categoriesRcInit()
-        val repository = CollectionRepository()
+        val repository = SearchRepository()
         val viewModelFactory = SearchViewModelFactory(repository)
         searchViewModel = ViewModelProvider(this, viewModelFactory).get(SearchViewModel::class.java)
         gridLayoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
         initSearchRc()
         searchViewListener()
         readLastSearchedData()
-        lastSearchedViewModel
+        recentlySearchedViewModel
+        deleteAllRecentlySearched()
     }
 
 
     private fun setDataByApi(term: String) {
-        searchViewModel.getCollections(term, staticCategory, 20, OFFSET)
+        searchViewModel.getCollections(term, staticCategory, 20)
         searchViewModel.collectionList.observe(viewLifecycleOwner, { response ->
             list.clear()
             list.addAll(response)
@@ -87,13 +70,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     fun showRecentlyViews() {
         binding.rcRecentlySearched.visibility = View.VISIBLE
         binding.recentlySearchedText.visibility = View.VISIBLE
-        searchViewModel.getCollections("", "", 20, 0)
+        binding.trashIcon.visibility = View.VISIBLE
+        searchViewModel.getCollections("", "", 20,)
     }
 
     fun goneRecentlyViews() {
 
         binding.rcRecentlySearched.visibility = View.GONE
         binding.recentlySearchedText.visibility = View.GONE
+        binding.trashIcon.visibility = View.GONE
     }
 
 
@@ -139,11 +124,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     private fun loadMore() {
-        println("stateopen" + LIMIT)
-
         if (LIMIT < 200) {
             LIMIT += 20
-            searchViewModel.getCollections(staticQuery, staticCategory, LIMIT, OFFSET)
+            searchViewModel.getCollections(staticQuery, staticCategory, LIMIT)
         }
     }
 
@@ -166,7 +149,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
                 list.clear()
                 println(category)
                 println(staticQuery)
-                searchViewModel.getCollections(staticQuery, category, 20, OFFSET)
+                searchViewModel.getCollections(staticQuery, category, 20)
                 staticCategory = category
             }
             binding.rcCategories.adapter = adapter
@@ -201,17 +184,54 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
             data.formattedPrice
         )
 
-        lastSearchedViewModel.addLastSearched(lastSearchedList)
+        recentlySearchedViewModel.addLastSearched(lastSearchedList)
     }
 
     private fun readLastSearchedData() {
-        lastSearchedViewModel.readAllData.observe(viewLifecycleOwner, {
+        recentlySearchedViewModel.readAllData.observe(viewLifecycleOwner, { it ->
             binding.rcRecentlySearched.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             val lastSearchedAdapter = RecentlySearchedAdapter()
             lastSearchedAdapter.addDataForRc(it)
             binding.rcRecentlySearched.adapter = lastSearchedAdapter
+            lastSearchedAdapter.clickListener = { currentData ->
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setTitle("Are you sure?")
+                builder.setMessage("Won't be able to recover this record!")
+                builder.setPositiveButton("Yes") { dialog, which ->
+                    recentlySearchedViewModel.deleteSingleRecentlySearched(currentData)
+                    dialog.dismiss()
+                }
+
+                builder.setNegativeButton("No") { dialog, which ->
+                    dialog.dismiss()
+                }
+
+                builder.show()
+
+
+            }
         })
     }
+
+    private fun deleteAllRecentlySearched() {
+        binding.trashIcon.setOnClickListener {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Are you sure?")
+            builder.setMessage("Won't be able to recover this record!")
+            builder.setPositiveButton("Yes") { dialog, which ->
+                recentlySearchedViewModel.deleteAllRecentlySearchedData()
+                dialog.dismiss()
+            }
+
+            builder.setNegativeButton("No") { dialog, which ->
+                dialog.dismiss()
+            }
+
+            builder.show()
+        }
+
+    }
+
 
 }

@@ -17,28 +17,28 @@
 
 
             <SearchView
-                android:textAlignment="center"
                 android:id="@+id/searchEditView"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_margin="16dp"
                 android:background="@drawable/categories_bg"
                 android:elevation="16dp"
+                android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-<!--            <androidx.appcompat.widget.AppCompatEditText-->
-<!--                android:hint="@string/search_your_desire"-->
-<!--                android:textAlignment="center"-->
-<!--                android:id="@+id/searchEditView"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="40dp"-->
-<!--                android:layout_margin="16dp"-->
-<!--                android:background="@drawable/categories_bg"-->
-<!--                android:elevation="16dp"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
+                app:layout_constraintTop_toTopOf="parent" />
+            <!--            <androidx.appcompat.widget.AppCompatEditText-->
+            <!--                android:hint="@string/search_your_desire"-->
+            <!--                android:textAlignment="center"-->
+            <!--                android:id="@+id/searchEditView"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="40dp"-->
+            <!--                android:layout_margin="16dp"-->
+            <!--                android:background="@drawable/categories_bg"-->
+            <!--                android:elevation="16dp"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toTopOf="parent" />-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcCategories"
@@ -59,12 +59,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rcCategories" />
 
+            <ImageView
+                android:id="@+id/trashIcon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginBottom="5sp"
+                android:src="@drawable/ic__11935_b_trash_icon"
+                app:layout_constraintBottom_toBottomOf="@+id/recentlySearchedText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/recentlySearchedText"
+                app:layout_constraintTop_toTopOf="@id/recentlySearchedText" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcRecentlySearched"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:orientation="horizontal"
+
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@+id/recentlySearchedText" />
 

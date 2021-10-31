@@ -1,6 +1,6 @@
 package com.akin.casestudy.data.api
 
-import com.akin.casestudy.util.Constants.Companion.BASE_URL
+import com.akin.casestudy.util.Statics.Companion.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

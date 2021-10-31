@@ -17,7 +17,7 @@ class RecentlySearchedAdapter() :
         RecyclerView.ViewHolder(binding.root) {
 
     }
-    var clickListener: (data: RecentlySearchedModel) -> Unit = {}
+     var clickListener: (data: RecentlySearchedModel) -> Unit = {}
     private var itemsList: List<RecentlySearchedModel> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentlySearchedViewHolder {
         val binding =
@@ -34,8 +34,8 @@ class RecentlySearchedAdapter() :
                 makePlaceHolder(holder.itemView.context)
             )
             nameText.text = itemListed.collectionName ?: itemListed.artistName
-            clickListener = {
-
+            holder.itemView.setOnClickListener {
+                clickListener(itemListed)
             }
         }
     }

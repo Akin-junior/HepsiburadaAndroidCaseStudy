@@ -7,9 +7,7 @@ import com.akin.casestudy.R
 import com.akin.casestudy.data.models.CategoriesModel
 import com.akin.casestudy.databinding.CategoriesItemBinding
 import com.akin.casestudy.interfaces.ICategoriesOnClick
-import com.akin.casestudy.util.Constants
-import com.akin.casestudy.util.Constants.Companion.LIMIT
-import com.akin.casestudy.util.Constants.Companion.OFFSET
+import com.akin.casestudy.util.Statics.Companion.LIMIT
 import com.akin.casestudy.util.loadInt
 
 

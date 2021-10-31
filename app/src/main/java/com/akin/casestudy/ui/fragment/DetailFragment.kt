@@ -3,8 +3,6 @@ package com.akin.casestudy.ui.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Html
-import android.transition.TransitionInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.View.*
 import androidx.fragment.app.DialogFragment
@@ -16,27 +14,18 @@ import com.akin.casestudy.util.loadString
 import com.akin.casestudy.util.loadStringForDetailPage
 import com.akin.casestudy.util.makeBigger
 import com.akin.casestudy.util.makePlaceHolder
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.SimpleExoPlayer
 
 
 class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding::inflate) {
 
     private val args: DetailFragmentArgs by navArgs()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
-    private lateinit var first: MediaItem
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        println(args.collectionItem.primaryGenreName)
+
         getNecessaryInfo()
         openPreview()
-
 
     }
 
@@ -66,7 +55,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                     artistNameText.text = args.collectionItem.artistName
                     videoButton.visibility = VISIBLE
 
-
                 }
                 "software" -> {
 
@@ -76,9 +64,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                         ?: args.collectionItem.formattedPrice).toString() + "$"
                     detailText.text = Html.fromHtml(args.collectionItem.description)
                     artistNameText.text = args.collectionItem.artistName
-
-
-
 
                 }
                 "ebook" -> {
@@ -91,8 +76,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                     detailText.text = readableDesc
                     artistNameText.text = args.collectionItem.artistName
 
-
-
                 }
                 else -> {
                     collectionNameText.text =
@@ -102,9 +85,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                     artistNameText.text = args.collectionItem.artistName
                     detailText.visibility = INVISIBLE
                     introduction.visibility = INVISIBLE
-
-
-
                 }
 
             }
@@ -121,28 +101,21 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
         }
     }
 
-    override fun onStop() {
-        // binding.videoPlayer.player?.stop()
-        super.onStop()
-    }
-
     private fun detailFab() {
-
-        val bottomFragment = VideoPreviewFragment()
-        bottomFragment.setStyle(
+        val videoPreviewFragment = VideoPreviewFragment()
+        videoPreviewFragment.setStyle(
             DialogFragment.STYLE_NORMAL,
             R.style.ThemeOverlay_Demo_BottomSheetDialog
         )
         val bundle = Bundle()
-
         bundle.apply {
             putString("url", args.collectionItem.previewUrl)
 
         }
 
-        bottomFragment.arguments = bundle
-        fragmentManager?.let { it1 ->
-            bottomFragment.show(it1, "TAG")
+        videoPreviewFragment.arguments = bundle
+        childFragmentManager.let { it1 ->
+            videoPreviewFragment.show(it1, "TAG")
         }
     }
     private fun formatDate(returnDate: String): String {

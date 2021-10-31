@@ -11,7 +11,6 @@ interface IRetrofit {
         @Query("term") artistName: String,
         @Query("entity") entity: String,
         @Query("limit") limit: Int,
-        @Query("offset") offset: Int,
     ): Response<CollectionModels>
 
 }

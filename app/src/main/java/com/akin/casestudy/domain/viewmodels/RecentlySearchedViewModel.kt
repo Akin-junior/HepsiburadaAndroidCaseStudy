@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.akin.casestudy.data.CategoriesDatabase
+import com.akin.casestudy.data.AppDataBase
 import com.akin.casestudy.data.models.RecentlySearchedModel
 import com.akin.casestudy.domain.repository.RecentlySearchedRepository
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +17,7 @@ class RecentlySearchedViewModel(application: Application) : AndroidViewModel(app
 
     init {
         val lastSearchedDao =
-            CategoriesDatabase.getDatabase(application).lastSearchedDao()
+            AppDataBase.getDatabase(application).lastSearchedDao()
         recentlySearchedRepository = RecentlySearchedRepository(lastSearchedDao)
         readAllData = recentlySearchedRepository.readAllData
 
@@ -26,6 +26,16 @@ class RecentlySearchedViewModel(application: Application) : AndroidViewModel(app
     fun addLastSearched(lastSearchedModel: RecentlySearchedModel) {
         viewModelScope.launch(Dispatchers.IO) {
             recentlySearchedRepository.addLastSearched(lastSearchedModel)
+        }
+    }
+    fun deleteSingleRecentlySearched(lastSearchedModel: RecentlySearchedModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            recentlySearchedRepository.deleteSingle(lastSearchedModel)
+        }
+    }
+    fun deleteAllRecentlySearchedData() {
+        viewModelScope.launch(Dispatchers.IO) {
+            recentlySearchedRepository.deleteAll()
         }
     }
 }
