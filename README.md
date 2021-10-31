@@ -7,7 +7,7 @@
 ## Key features
  
  * ✔ Mvvm
- * ✔ iTunes Search Api
+ * ✔ Simple unitTest
  * ✔ BaseFragment
  * ✔ Mapper
  * ✔ Room
