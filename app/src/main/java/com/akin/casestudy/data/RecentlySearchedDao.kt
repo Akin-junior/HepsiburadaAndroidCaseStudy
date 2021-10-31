@@ -13,6 +13,6 @@ interface RecentlySearchedDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addLastSearched(lastSearchedObject: RecentlySearchedModel)
 
-    @Query("SELECT * FROM lastSearched_table ORDER BY id ASC")
+    @Query("SELECT * FROM lastSearched_table ORDER BY id DESC")
     fun readAllData() : LiveData<List<RecentlySearchedModel>>
 }

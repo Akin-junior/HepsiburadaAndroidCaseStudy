@@ -60,6 +60,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
             editor.putBoolean("firstStartHome", false)
             editor.apply()
         }
+
         categoriesRcInit()
         val repository = CollectionRepository()
         val viewModelFactory = SearchViewModelFactory(repository)
@@ -73,7 +74,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
 
     private fun setDataByApi(term: String) {
-        searchViewModel.getCollections(term, "", 20, OFFSET)
+        searchViewModel.getCollections(term, staticCategory, 20, OFFSET)
         searchViewModel.collectionList.observe(viewLifecycleOwner, { response ->
             list.clear()
             list.addAll(response)

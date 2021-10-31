@@ -13,83 +13,123 @@
 
 
         <TextView
-            android:id="@+id/nameText"
+
+            android:id="@+id/releaseDateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:fontFamily="@font/poppinsextrabold"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:textColor="@color/subTextColor"
+            android:rotation="270"
+            android:textColor="@color/altTextColor"
             android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/detailFragmentImageView"
+            app:layout_constraintEnd_toStartOf="@+id/detailFragmentImageView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="TEST" />
 
-
+        <ImageButton
+            android:visibility="gone"
+            android:id="@+id/videoButton"
+            android:alpha="0.6"
+            android:backgroundTint="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:elevation="5sp"
+            android:src="@drawable/ic_baseline_videocam_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:transitionName="transitionToDetail"
             android:id="@+id/detailFragmentImageView"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="10dp"
+            android:transitionName="transitionToDetail"
             app:cardCornerRadius="32dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent=".5"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHeight_percent=".4"
 
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
 
-            app:layout_constraintTop_toBottomOf="@+id/nameText"
+            app:layout_constraintWidth_percent="0.8"
             tools:src="@drawable/ic_launcher_background" />
 
         <TextView
-            android:id="@+id/priceText"
+            android:id="@+id/collectionNameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/poppinsextrabold"
             android:includeFontPadding="false"
             android:padding="8dp"
             android:textColor="@color/subTextColor"
             android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detailFragmentImageView"
-            tools:text="price" />
-
-
-        <androidx.appcompat.widget.AppCompatButton
-
-            android:id="@+id/fabPlay"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:background="@drawable/categories_bg"
-            android:text="@string/preview"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/scrollView"
-            app:layout_constraintEnd_toStartOf="@+id/priceText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailFragmentImageView"
-            tools:visibility="visible" />
+            tools:text="collectionName" />
+
+        <TextView
+            android:id="@+id/artistNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppinsregular"
+            android:includeFontPadding="false"
+            android:padding="8dp"
+            android:textColor="@color/altTextColor"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/collectionNameText"
+            tools:text="artistname" />
+
+        <TextView
+            android:id="@+id/priceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppinsregular"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:padding="8dp"
+            android:textColor="@color/altTextColor"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/introduction"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/artistNameText"
+            tools:text="price" />
+
+        <TextView
+            android:id="@+id/introduction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppinsmedium"
+            android:includeFontPadding="false"
+            android:padding="8dp"
+            android:text="@string/introduction"
+            android:textColor="@color/subTextColor"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/scrollView"
+            app:layout_constraintStart_toStartOf="parent" />
+
 
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="200dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/priceText">
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/detailText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppinsmedium"
                 android:padding="8dp"
-                android:textColor="@color/subTextColor"
-                tools:text="@string/lorem" />
-
+                android:text="@string/lorem"
+                android:textColor="@color/altTextColor" />
         </ScrollView>
 
 

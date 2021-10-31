@@ -54,4 +54,9 @@ class VideoPreviewFragment : DialogFragment() {
 
     }
 
+    override fun onStop() {
+        binding.videoPlayer.player?.stop()
+        super.onStop()
+    }
+
 }

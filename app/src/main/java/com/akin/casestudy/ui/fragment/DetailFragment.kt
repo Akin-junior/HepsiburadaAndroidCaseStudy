@@ -48,9 +48,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                 detailFragmentImageView.loadStringForDetailPage(
                     args.collectionItem.imageUrl?.makeBigger(),
                     makePlaceHolder(requireContext())
-
                 )
-                //videoPlayer.visibility = GONE
             } catch (e: Exception) {
                 detailFragmentImageView.loadString(
                     args.collectionItem.imageUrl,
@@ -60,57 +58,64 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
 
             when (args.collectionItem.kind) {
                 "feature-movie" -> {
-                    nameText.text =
+                    collectionNameText.text =
                         args.collectionItem.collectionName ?: args.collectionItem.trackName
                     priceText.text = (args.collectionItem.collectionPrice
                         ?: args.collectionItem.price).toString() + "$"
                     detailText.text = args.collectionItem.longDescription
-                    fabPlay.visibility = VISIBLE
+                    artistNameText.text = args.collectionItem.artistName
+                    videoButton.visibility = VISIBLE
+
 
                 }
                 "software" -> {
-                    motionLayout.loadLayoutDescription(R.xml.fragment_detail_scene)
-                    nameText.text =
-                        args.collectionItem.trackName ?: args.collectionItem.artistName
+
+                    collectionNameText.text =
+                        args.collectionItem.trackName ?: args.collectionItem.collectionName
                     priceText.text = (args.collectionItem.price
                         ?: args.collectionItem.formattedPrice).toString() + "$"
                     detailText.text = Html.fromHtml(args.collectionItem.description)
-                    fabPlay.visibility = GONE
+                    artistNameText.text = args.collectionItem.artistName
+
+
 
 
                 }
                 "ebook" -> {
-                    motionLayout.loadLayoutDescription(R.xml.fragment_detail_scene)
-                    nameText.text =
+
+                    collectionNameText.text =
                         args.collectionItem.trackName ?: args.collectionItem.artistName
                     priceText.text = (args.collectionItem.price
                         ?: args.collectionItem.formattedPrice).toString() + "$"
                     val readableDesc = Html.fromHtml(args.collectionItem.description)
                     detailText.text = readableDesc
-                    fabPlay.visibility = GONE
+                    artistNameText.text = args.collectionItem.artistName
+
 
 
                 }
                 else -> {
-                    nameText.text =
+                    collectionNameText.text =
                         args.collectionItem.collectionName ?: args.collectionItem.trackName
                     priceText.text = (args.collectionItem.collectionPrice
                         ?: args.collectionItem.price).toString() + "$"
-                    detailText.text =
-                        "Artist Name:" + "\n" + args.collectionItem.artistName.toString()
-                    detailText.textSize = 24f
-                    detailText.textAlignment = TEXT_ALIGNMENT_CENTER
+                    artistNameText.text = args.collectionItem.artistName
+                    detailText.visibility = INVISIBLE
+                    introduction.visibility = INVISIBLE
+
 
 
                 }
+
             }
+            releaseDateText.text = formatDate(args.collectionItem.releaseDate.toString())
+
         }
     }
 
     private fun openPreview() {
         binding.apply {
-            fabPlay.setOnClickListener {
-                println("press")
+            videoButton.setOnClickListener {
                 detailFab()
             }
         }
@@ -139,6 +144,10 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
         fragmentManager?.let { it1 ->
             bottomFragment.show(it1, "TAG")
         }
+    }
+    private fun formatDate(returnDate: String): String {
+        val readableText = returnDate.split("T")
+        return readableText[0]
     }
 
 }

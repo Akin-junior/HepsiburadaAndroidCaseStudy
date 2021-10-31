@@ -18,7 +18,4 @@ class CustomTitleTextView constructor(context: Context, attributeSet: AttributeS
         setTextColor(ContextCompat.getColor(context, R.color.subTextColor))
     }
 
-
-
-
 }
