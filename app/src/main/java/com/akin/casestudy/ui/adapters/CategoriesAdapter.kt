@@ -1,5 +1,6 @@
 package com.akin.casestudy.ui.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -30,7 +31,7 @@ class CategoriesAdapter(
         return CategoriesViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: CategoriesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CategoriesViewHolder, @SuppressLint("RecyclerView") position: Int) {
         val categorizedList = categoriesList[position]
 
         holder.binding.apply {

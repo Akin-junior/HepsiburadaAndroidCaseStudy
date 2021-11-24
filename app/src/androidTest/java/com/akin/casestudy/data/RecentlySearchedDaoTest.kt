@@ -24,14 +24,14 @@ class RecentlySearchedDaoTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var dao: RecentlySearchedDao
-    private lateinit var database: CategoriesDatabase
+    private lateinit var database: AppDataBase
 
     @Before
     fun setup() {
         //gecici database olusturuyoruz test icin
         database = Room.inMemoryDatabaseBuilder(
             ApplicationProvider.getApplicationContext(),
-            CategoriesDatabase::class.java
+            AppDataBase::class.java
         ).allowMainThreadQueries().build()
         dao = database.lastSearchedDao()
     }
